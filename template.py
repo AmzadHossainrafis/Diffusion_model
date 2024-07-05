@@ -1,8 +1,10 @@
-import os 
+import os
 from pathlib import Path
-import logging 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+import logging
 
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 
 
 project_name = "Diffusion"
@@ -25,7 +27,7 @@ list_of_files = [
     "tests/.gitkeep",
     "config/config.yaml",
     "requirements.txt",
-    "LICENSE"
+    "LICENSE",
     "setup.py",
     ".gitignore",
     "scripts.py",
@@ -33,21 +35,18 @@ list_of_files = [
     "app.py",
     "runtime.txt",
     "Procfile",
-    "Makefile",
+    "Dockerfile",
     "notebook/trials.ipynb",
     "notebook/EDA.ipynb",
     "templates/index.html",
-    "static/style.css"
-
-
+    "static/style.css",
 ]
 
 for filepath in list_of_files:
     filepath = Path(filepath)
     filedir, filename = os.path.split(filepath)
 
-
-    if filedir !="":
+    if filedir != "":
         os.makedirs(filedir, exist_ok=True)
         logging.info(f"Creating directory; {filedir} for the file: {filename}")
 
@@ -55,7 +54,6 @@ for filepath in list_of_files:
         with open(filepath, "w") as f:
             pass
             logging.info(f"Creating empty file: {filepath}")
-
 
     else:
         logging.info(f"{filename} is already exists")

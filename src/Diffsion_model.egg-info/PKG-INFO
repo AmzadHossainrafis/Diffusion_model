@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: Diffsion_model
+Version: 0.0.0
+Summary: A small python package for image deblurring using DnCNN
+Home-page: https://github.com/Amzad hossain/Diffsion_model
+Author: Amzad hossain
+Author-email: amzad.rafi@northsouth.edu
+Project-URL: Bug Tracker, https://github.com/Amzad hossain/Diffsion_model/issues
+License-File: LICENSE
