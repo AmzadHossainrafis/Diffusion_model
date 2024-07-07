@@ -8,8 +8,6 @@ import logging
 from Diffusion.utils.utils import save_images
 
 
-
-
 class Trainer:
     """
     A class to encapsulate the training process of a diffusion model.
@@ -41,7 +39,9 @@ class Trainer:
             device (str, optional): The device to run the training on. Defaults to CUDA if available, else CPU.
         """
         self.setup_logging("diffusion_unconditional")
-        self.device = device if device else ("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = (
+            device if device else ("cuda" if torch.cuda.is_available() else "cpu")
+        )
         self.dataloader = dataloader
         self.model = model.to(self.device)
         self.optimizer = optim.AdamW(self.model.parameters(), lr=3e-4)
@@ -57,7 +57,7 @@ class Trainer:
         Parameters:
             name (str): The name of the log file.
         """
-        logging.basicConfig(filename=f'{name}.log', level=logging.INFO)
+        logging.basicConfig(filename=f"{name}.log", level=logging.INFO)
 
     def train(self, epochs=500):
         """
@@ -81,10 +81,16 @@ class Trainer:
                 self.optimizer.step()
 
                 pbar.set_postfix(MSE=loss.item())
-                self.logger.add_scalar("MSE", loss.item(), global_step=epoch * self.l + i)
+                self.logger.add_scalar(
+                    "MSE", loss.item(), global_step=epoch * self.l + i
+                )
 
             sampled_images = self.diffusion.sample(self.model, n=images.shape[0])
-            save_images(sampled_images, os.path.join("results", "diffusion_unconditional", f"{epoch}.jpg"))
-            torch.save(self.model.state_dict(), os.path.join("models", "diffusion_unconditional", f"ckpt_{epoch}.pt"))
-
-    
+            save_images(
+                sampled_images,
+                os.path.join("results", "diffusion_unconditional", f"{epoch}.jpg"),
+            )
+            torch.save(
+                self.model.state_dict(),
+                os.path.join("models", "diffusion_unconditional", f"ckpt_{epoch}.pt"),
+            )

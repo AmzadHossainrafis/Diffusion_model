@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
-from custom import SelfAttention, DoubleConv, Down, Up 
-
+from custom import SelfAttention, DoubleConv, Down, Up
 
 
 class UNet(nn.Module):

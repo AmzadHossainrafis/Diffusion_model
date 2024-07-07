@@ -4,18 +4,19 @@ import torch.nn.functional as F
 
 
 class EMA:
-    ''''
-        
-        Exponential Moving Average (EMA) is a method to average the weights of a model with the weights of another model.
-        This is useful for model ensembling, where the weights of the model are averaged with the weights of another model.
+    """'
 
-        Args: 
-        beta: float 
-            The beta value for the EMA. This is the weight of the new model's weights in the average.
+    Exponential Moving Average (EMA) is a method to average the weights of a model with the weights of another model.
+    This is useful for model ensembling, where the weights of the model are averaged with the weights of another model.
 
-        return: None 
-        
-    '''
+    Args:
+    beta: float
+        The beta value for the EMA. This is the weight of the new model's weights in the average.
+
+    return: None
+
+    """
+
     def __init__(self, beta):
         super().__init__()
 
@@ -23,7 +24,9 @@ class EMA:
         self.step = 0
 
     def update_model_average(self, ma_model, current_model):
-        for current_params, ma_params in zip(current_model.parameters(), ma_model.parameters()):
+        for current_params, ma_params in zip(
+            current_model.parameters(), ma_model.parameters()
+        ):
             old_weight, up_weight = ma_params.data, current_params.data
             ma_params.data = self.update_average(old_weight, up_weight)
 
@@ -43,6 +46,7 @@ class EMA:
     def reset_parameters(self, ema_model, model):
         ema_model.load_state_dict(model.state_dict())
 
+
 class SelfAttention(nn.Module):
     """
     The SelfAttention class implements a self-attention mechanism using multi-head attention, specifically designed for processing 2D data (e.g., images) in a format compatible with convolutional neural networks. This class enhances the model's ability to focus on different parts of the input image by computing attention across different positions in the input feature map.
@@ -61,6 +65,7 @@ class SelfAttention(nn.Module):
     Methods:
         forward(x): Defines the forward pass of the module. It reshapes the input tensor to a 2D format (flattening the spatial dimensions), applies layer normalization, computes self-attention using the multi-head attention layer, adds the input (residual connection), processes the result through the feed-forward network, and finally reshapes the output back to its original spatial dimensions.
     """
+
     def __init__(self, channels, size):
         super(SelfAttention, self).__init__()
         self.channels = channels
@@ -84,11 +89,14 @@ class SelfAttention(nn.Module):
         attention_value = attention_value + x
         attention_value = self.ff_self(attention_value) + attention_value
         # Reshape output to original spatial dimensions
-        return attention_value.swapaxes(2, 1).view(-1, self.channels, self.size, self.size)
+        return attention_value.swapaxes(2, 1).view(
+            -1, self.channels, self.size, self.size
+        )
+
 
 class DoubleConv(nn.Module):
     """
-    A DoubleConv module represents a sequence of two convolutional blocks used in U-Net architectures. Each block consists of a convolutional layer followed by batch normalization and a ReLU activation function. 
+    A DoubleConv module represents a sequence of two convolutional blocks used in U-Net architectures. Each block consists of a convolutional layer followed by batch normalization and a ReLU activation function.
     Optionally, a residual connection can be included to add the input directly to the output after the second convolutional block, which can help with gradient flow and model performance for deeper networks.
 
     This module is typically used in both the downsampling (contracting path) and upsampling (expansive path) parts of a U-Net architecture, providing a way to process and refine feature maps while maintaining the network's depth.
@@ -106,6 +114,7 @@ class DoubleConv(nn.Module):
     Methods:
         forward(x): Defines the forward pass of the module. Takes an input tensor `x` and passes it through the two convolutional blocks. If use_residual is True, the original input is added to the output of these blocks before returning.
     """
+
     def __init__(self, in_channels, out_channels, mid_channels=None, residual=False):
         super().__init__()
         self.residual = residual
@@ -156,6 +165,7 @@ class Down(nn.Module):
                        applies the max pooling and convolutional operations to `x`, processes `t` through the embedding layer,
                        and adds the expanded embedding to the output feature map.
     """
+
     def __init__(self, in_channels, out_channels, emb_dim=256):
         super().__init__()
         self.maxpool_conv = nn.Sequential(
@@ -166,10 +176,7 @@ class Down(nn.Module):
 
         self.emb_layer = nn.Sequential(
             nn.SiLU(),
-            nn.Linear(
-                emb_dim,
-                out_channels
-            ),
+            nn.Linear(emb_dim, out_channels),
         )
 
     def forward(self, x, t):
@@ -195,6 +202,7 @@ class Up(nn.Module):
     Methods:
         forward(x, skip_x, t): Defines the computation performed at every call. It takes an input tensor `x`, a skip connection tensor `skip_x`, and an embedding tensor `t`. The method upsamples `x`, concatenates it with `skip_x`, processes the result through convolutional blocks, and integrates the processed embedding into the final feature map.
     """
+
     def __init__(self, in_channels, out_channels, emb_dim=256):
         super().__init__()
 
@@ -206,10 +214,7 @@ class Up(nn.Module):
 
         self.emb_layer = nn.Sequential(
             nn.SiLU(),
-            nn.Linear(
-                emb_dim,
-                out_channels
-            ),
+            nn.Linear(emb_dim, out_channels),
         )
 
     def forward(self, x, skip_x, t):

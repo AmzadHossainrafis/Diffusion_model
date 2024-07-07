@@ -1,5 +1,6 @@
-from torch.utils.data import DataLoader 
+from torch.utils.data import DataLoader
 import torchvision
+
 
 def get_data(dataset_dir, transforms):
     """
@@ -15,8 +16,8 @@ def get_data(dataset_dir, transforms):
 
     Returns:
         DataLoader: A DataLoader object for the dataset.
-    """ 
+    """
 
-    dataset = torchvision.datasets.ImageFolder(dataset_dir , transform=transforms)
+    dataset = torchvision.datasets.ImageFolder(dataset_dir, transform=transforms)
     dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
     return dataloader
