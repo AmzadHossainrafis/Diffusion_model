@@ -33,7 +33,10 @@ Transform_config :
 
 
 model_config: 
-  input_dim: 3 
+  cha_in: 3
+  cha_out: 3 
+  time_dim : 256 
+  device: cuda 
   selfattn: 
     n_head: 4 
     batch_first: True

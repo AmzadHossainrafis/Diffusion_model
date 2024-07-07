@@ -1,10 +1,13 @@
 import torch
 import torch.nn as nn
 from custom import SelfAttention, DoubleConv, Down, Up
+from Diffusion.utils.utils import read_config
+
+model_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")['model_config']
 
 
 class UNet(nn.Module):
-    def __init__(self, c_in=3, c_out=3, time_dim=256, device="cuda"):
+    def __init__(self, c_in=model_config["cha_in"], c_out=model_config['cha_out'], time_dim=model_config['time_dim'], device=model_config["device"]):
         super().__init__()
         self.device = device
         self.time_dim = time_dim
