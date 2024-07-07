@@ -6,6 +6,10 @@ from tqdm import tqdm
 import os
 import logging
 from Diffusion.utils.utils import save_images
+from Diffusion.utils.utils import read_config 
+from Diffusion.utils.logger import logger
+
+train_config = read_config('/home/amzad/Desktop/diffusion/config/config.yaml')['Train_config']
 
 
 class Trainer:
@@ -38,7 +42,9 @@ class Trainer:
             diffusion (Diffusion): The diffusion process object.
             device (str, optional): The device to run the training on. Defaults to CUDA if available, else CPU.
         """
-        self.setup_logging("diffusion_unconditional")
+        logger.info("Initializing Trainer")
+        logger.info(f'train_config {train_config}')
+
         self.device = (
             device if device else ("cuda" if torch.cuda.is_available() else "cpu")
         )
@@ -50,16 +56,8 @@ class Trainer:
         self.logger = SummaryWriter(os.path.join("runs", "diffusion_unconditional"))
         self.l = len(dataloader)
 
-    def setup_logging(self, name):
-        """
-        Sets up logging with a specified filename.
-
-        Parameters:
-            name (str): The name of the log file.
-        """
-        logging.basicConfig(filename=f"{name}.log", level=logging.INFO)
-
-    def train(self, epochs=500):
+  
+    def train(self, epochs=train_config['epochs']):
         """
         Trains the model for a specified number of epochs.
 
@@ -67,7 +65,7 @@ class Trainer:
             epochs (int, optional): The number of epochs to train the model. Defaults to 500.
         """
         for epoch in range(epochs):
-            logging.info(f"Starting epoch {epoch}:")
+            logger.info(f"Starting epoch {epoch}:")
             pbar = tqdm(self.dataloader)
             for i, (images, _) in enumerate(pbar):
                 images = images.to(self.device)
@@ -76,14 +74,16 @@ class Trainer:
                 predicted_noise = self.model(x_t, t)
                 loss = self.mse(noise, predicted_noise)
 
+                logger.info(f"Epoch {epoch}, Batch {i}: MSE Loss = {loss.item()}")
+                
                 self.optimizer.zero_grad()
                 loss.backward()
                 self.optimizer.step()
 
                 pbar.set_postfix(MSE=loss.item())
-                self.logger.add_scalar(
-                    "MSE", loss.item(), global_step=epoch * self.l + i
-                )
+                # self.logger.add_scalar(
+                #     "MSE", loss.item(), global_step=epoch * self.l + i
+                # )
 
             sampled_images = self.diffusion.sample(self.model, n=images.shape[0])
             save_images(
@@ -92,5 +92,5 @@ class Trainer:
             )
             torch.save(
                 self.model.state_dict(),
-                os.path.join("models", "diffusion_unconditional", f"ckpt_{epoch}.pt"),
+                os.path.join(train_config['model_ckpt'], f"ckpt_{epoch}.pt"),
             )
