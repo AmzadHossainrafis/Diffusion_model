@@ -1,5 +1,5 @@
 # Diffusion model implimentation 
-paper link : 
+paper link : [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239)
 
 ## Description
 
@@ -26,7 +26,7 @@ Despite their computational demands, diffusion models' ability to generate diver
 1. create conda enviroment
  
 ```bash
-conda create --name myenv python=3.9 -y 
+ $ conda create --name myenv python=3.9 -y 
 ```
 2. clone the project 
 ```bash
