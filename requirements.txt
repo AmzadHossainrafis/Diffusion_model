@@ -1,7 +1,5 @@
 pillow 
 flask 
 gunicorn
-opencv-python
-numpy 
 matplotlib 
-
+PyYAML
