@@ -2,6 +2,7 @@ import torch
 import torchvision
 from PIL import Image
 import matplotlib.pyplot as plt
+import yaml
 
 def plot_images(images):
     """
@@ -40,3 +41,18 @@ def save_images(images, path, **kwargs):
     ndarr = grid.permute(1, 2, 0).to('cpu').numpy()
     im = Image.fromarray(ndarr)
     im.save(path)
+
+
+def read_config(config_path):
+    """
+    arg :
+    config_path : path to the config file
+
+    return :
+    config : config file in the form of dictionary
+
+
+    """
+    with open(config_path) as f:
+        config = yaml.safe_load(f)
+    return config
