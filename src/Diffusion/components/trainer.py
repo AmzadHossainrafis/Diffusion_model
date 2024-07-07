@@ -84,17 +84,3 @@ class Trainer:
             torch.save(self.model.state_dict(), os.path.join("models", "diffusion_unconditional", f"ckpt_{epoch}.pt"))
 
     
-if __name__ == '__main__':
-    import torchvision
-    from Diffusion.components.data_transformation import transforms
-    from Diffusion.components.models import UNet
-    from Diffusion.components.diffusion import Diffusion
-    from Diffusion.components.data import get_celeba_dataloader
-
-    dataset = torchvision.datasets.CelebA(root="data", download=True, transform=transforms)
-    dataloader = get_celeba_dataloader(dataset, batch_size=16, num_workers=4)
-    model = UNet(c_in=3, c_out=3, time_dim=256)
-    diffusion = Diffusion()
-    trainer = Trainer(model, dataloader, diffusion)
-    trainer.train(epochs=10)
-    

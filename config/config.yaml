@@ -1,4 +1,5 @@
 Train_config:
+  train_name: 'diffusion unconditional'
   batch_size: 4 
   epoch : 500 
   lr : 3e-4 
