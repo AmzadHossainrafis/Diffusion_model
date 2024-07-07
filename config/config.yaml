@@ -1,0 +1,51 @@
+Train_config:
+  batch_size: 4 
+  epoch : 500 
+  lr : 3e-4 
+  shaffle : True 
+
+
+
+Dir : 
+  dataset_dir : /home/amzad/Desktop/diffusion/dataset/images/
+  model_ckpt_dir : /home/amzad/Desktop/diffusion/artifacts/model_ckpt/
+  fig : /home/amzad/Desktop/diffusion/fig/
+  artifact_dir : /home/amzad/Desktop/diffusion/artifacts
+
+
+Transform_config : 
+  image_size : 64 
+  resize : 80 
+  crop : 64 
+  normalize : 
+    mean : 
+      - 0.5
+      - 0.5
+      - 0.5
+    std :
+      - 0.5
+      - 0.5
+      - 0.5
+  to_tensor : True  
+
+
+
+model_config: 
+  input_dim: 3 
+  selfattn: 
+    n_head: 4 
+    batch_first: True
+
+  dobule_conv:  
+    kernel_size: 3 
+    stride: 1 
+    padding: 1 
+    bias: True
+  down: 
+    kernel_size: 4 
+    stride: 2 
+    padding: 1 
+    bias: False
+
+
+    
