@@ -4,14 +4,16 @@ Train_config:
   epoch : 500 
   lr : 3e-4 
   shaffle : True 
+  intrable : 10 
+  num_sample : 3 
   model_ckpt  : /home/amzad/Desktop/diffusion/artifacts/model_ckpt/
   logs : /home/amzad/Desktop/diffusion/logs/
+  figs : /home/amzad/Desktop/diffusion/fig/
 
 
 
 Dir : 
   dataset_dir : /home/amzad/Desktop/diffusion/dataset/images/
-  fig : /home/amzad/Desktop/diffusion/fig/
   artifact_dir : /home/amzad/Desktop/diffusion/artifacts
 
 

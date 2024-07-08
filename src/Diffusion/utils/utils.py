@@ -4,6 +4,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import yaml
 
+
 def plot_images(images):
     """
     Plots a grid of images in a single matplotlib figure.
@@ -17,10 +18,18 @@ def plot_images(images):
                                C is the number of channels, H is the height, and W is the width.
     """
     plt.figure(figsize=(32, 32))
-    plt.imshow(torch.cat([
-        torch.cat([i for i in images.cpu()], dim=-1),
-    ], dim=-2).permute(1, 2, 0).cpu())
+    plt.imshow(
+        torch.cat(
+            [
+                torch.cat([i for i in images.cpu()], dim=-1),
+            ],
+            dim=-2,
+        )
+        .permute(1, 2, 0)
+        .cpu()
+    )
     plt.show()
+
 
 def save_images(images, path, **kwargs):
     """
@@ -38,7 +47,7 @@ def save_images(images, path, **kwargs):
         **kwargs: Additional keyword arguments passed to torchvision.utils.make_grid function.
     """
     grid = torchvision.utils.make_grid(images, **kwargs)
-    ndarr = grid.permute(1, 2, 0).to('cpu').numpy()
+    ndarr = grid.permute(1, 2, 0).to("cpu").numpy()
     im = Image.fromarray(ndarr)
     im.save(path)
 

@@ -68,13 +68,12 @@ class CustomException(Exception):
         return f"{self.error_message}"
 
 
-
 if __name__ == "__main__":
     try:
-        a = 1/0
+        a = 1 / 0
     except Exception as e:
-        logging.info('division by zero is not possible')
-        raise CustomException(e,sys)
+        logging.info("division by zero is not possible")
+        raise CustomException(e, sys)
     # try:
     #     image_name = "test.jpg"
     #     raise InvalidFormatError(image_name)
