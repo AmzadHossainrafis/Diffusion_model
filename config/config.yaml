@@ -5,10 +5,16 @@ Train_config:
   lr : 3e-4 
   shaffle : True 
   intrable : 10 
-  num_sample : 3 
+  num_sample : 3 # number of samples to generate mainly represented as n 
   model_ckpt  : /home/amzad/Desktop/diffusion/artifacts/model_ckpt/
   logs : /home/amzad/Desktop/diffusion/logs/
   figs : /home/amzad/Desktop/diffusion/fig/
+
+noise_schedule: 
+  start : 1e-4 
+  end : 0.02
+  steps : 1000
+  device : cuda
 
 
 

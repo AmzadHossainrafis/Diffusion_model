@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
 import os
-from Diffusion.utils.utils import save_images ,read_config
+from Diffusion.utils.utils import save_images, read_config
 from Diffusion.utils.logger import logger
 from Diffusion.utils.exception import CustomException
 import sys
@@ -45,7 +45,7 @@ class Trainer:
             diffusion (Diffusion): The diffusion process object.
             device (str, optional): The device to run the training on. Defaults to CUDA if available, else CPU.
         """
-        
+
         self.device = (
             device if device else ("cuda" if torch.cuda.is_available() else "cpu")
         )
@@ -54,7 +54,7 @@ class Trainer:
         self.optimizer = optim.AdamW(self.model.parameters(), lr=3e-4)
         self.mse = nn.MSELoss()
         self.diffusion = diffusion
-        #self.logger = SummaryWriter(os.path.join("runs", "diffusion_unconditional"))
+        # self.logger = SummaryWriter(os.path.join("runs", "diffusion_unconditional"))
         self.l = len(dataloader)
 
     def train(self, epochs=train_config["epochs"]):
@@ -85,14 +85,24 @@ class Trainer:
                     pbar.set_postfix(MSE=loss.item())
             torch.save(
                 self.model.state_dict(),
-                os.path.join(train_config["model_ckpt"], f"{train_config['train_name']}_ckpt_.pt"),
+                os.path.join(
+                    train_config["model_ckpt"], f"{train_config['train_name']}_ckpt_.pt"
+                ),
             )
             if epoch % train_config["intrable"] == 0:
-                sampled_images = self.diffusion.sample(self.model, n=train_config['num_sample'])
+                sampled_images = self.diffusion.sample(
+                    self.model, n=train_config["num_sample"]
+                )
                 save_images(
                     sampled_images,
-                    os.path.join(train_config['figs'], f"prediction_on_{epoch}.jpg"),
+                    os.path.join(train_config["figs"], f"prediction_on_{epoch}.jpg"),
                 )
         except Exception as e:
             logger.info(f"Error  occared {e}")
             raise CustomException(e, sys)
+
+
+if __name__ == "__main__":
+
+    from Diffusion.components.models import UNet
+    from Diffusion.components.data_loader import get_data
