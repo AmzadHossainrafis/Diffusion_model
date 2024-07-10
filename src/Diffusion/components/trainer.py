@@ -7,6 +7,9 @@ from Diffusion.utils.utils import save_images, read_config
 from Diffusion.utils.logger import logger
 from Diffusion.utils.exception import CustomException
 import sys
+from Diffusion.components.noise_sheduler import Diffusion
+from Diffusion.components.custom import EMA
+
 
 
 train_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
@@ -35,7 +38,7 @@ class Trainer:
         implementation.
     """
 
-    def __init__(self, model, dataloader, diffusion, device=None):
+    def __init__(self, model, dataloader, diffusion,ema = True ,device=None):
         """
         Initializes the Trainer class with model, dataloader, diffusion process, and device.
 
@@ -56,6 +59,11 @@ class Trainer:
         self.diffusion = diffusion
         # self.logger = SummaryWriter(os.path.join("runs", "diffusion_unconditional"))
         self.l = len(dataloader)
+        self.ema = ema
+        if self.ema: 
+            Ema = EMA(0.99)
+            Ema_model = copy.deepcopy(self.model).eval().required
+            
 
     def train(self, epochs=train_config["epochs"]):
         """
@@ -106,3 +114,10 @@ if __name__ == "__main__":
 
     from Diffusion.components.models import UNet
     from Diffusion.components.data_loader import get_data
+    from Diffusion.components.noise_sheduler import Diffusion
+
+    data = get_data(train_config["dataset"])
+    model = UNet.to('cuda')
+
+
+
