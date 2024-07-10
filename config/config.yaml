@@ -10,14 +10,14 @@ Train_config:
   logs : /home/amzad/Desktop/diffusion/logs/
   figs : /home/amzad/Desktop/diffusion/fig/
   dataset_dir : /home/amzad/Desktop/diffusion/dataset/images/
+  ema_enable : True 
+  ema : 0.999
 
 noise_schedule: 
   start : 1e-4 
   end : 0.02
   steps : 1000
   device : cuda
-
-
 
 Dir : 
   artifact_dir : /home/amzad/Desktop/diffusion/artifacts

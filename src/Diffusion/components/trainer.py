@@ -9,7 +9,8 @@ from Diffusion.utils.exception import CustomException
 import sys
 from Diffusion.components.noise_sheduler import Diffusion
 from Diffusion.components.custom import EMA
-import copyy 
+import copy
+from Diffusion.components.custom import EMA
 
 
 train_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
@@ -38,7 +39,7 @@ class Trainer:
         implementation.
     """
 
-    def __init__(self, model, dataloader, diffusion,ema = True ,device=None):
+    def __init__(self, model, dataloader, diffusion,ema = train_config['ema_enable'] ,device=None):
         """
         Initializes the Trainer class with model, dataloader, diffusion process, and device.
 
@@ -54,15 +55,15 @@ class Trainer:
         )
         self.dataloader = dataloader
         self.model = model.to(self.device)
-        self.optimizer = optim.AdamW(self.model.parameters(), lr=3e-4)
+        self.optimizer = optim.AdamW(self.model.parameters(), lr=train_config["lr"])
         self.mse = nn.MSELoss()
         self.diffusion = diffusion
         # self.logger = SummaryWriter(os.path.join("runs", "diffusion_unconditional"))
         self.l = len(dataloader)
         self.ema = ema
         if self.ema: 
-            Ema = EMA(0.99)
-            Ema_model = copy.deepcopy(self.model).eval().required
+            self.Ema = EMA(0.99)
+            self.Ema_model = copy.deepcopy(self.model).eval().requires_grad_(False)
             
 
     def train(self, epochs=train_config["epochs"]):
@@ -90,6 +91,9 @@ class Trainer:
                     self.optimizer.zero_grad()
                     loss.backward()
                     self.optimizer.step()
+                    if self.ema:
+                        self.Ema.step_ema(self.Ema_model, self.model)
+
                     pbar.set_postfix(MSE=loss.item())
             torch.save(
                 self.model.state_dict(),
@@ -122,7 +126,7 @@ if __name__ == "__main__":
     trainer = Trainer(model, data, diffusion)
     trainer.train()
 
-    
+
 
 
 
