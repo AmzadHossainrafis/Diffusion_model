@@ -9,7 +9,7 @@ from Diffusion.utils.exception import CustomException
 import sys
 from Diffusion.components.noise_sheduler import Diffusion
 from Diffusion.components.custom import EMA
-
+import copyy 
 
 
 train_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
@@ -118,6 +118,11 @@ if __name__ == "__main__":
 
     data = get_data(train_config["dataset"])
     model = UNet.to('cuda')
+    diffusion = Diffusion()
+    trainer = Trainer(model, data, diffusion)
+    trainer.train()
+
+    
 
 
 

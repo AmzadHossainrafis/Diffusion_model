@@ -9,6 +9,7 @@ Train_config:
   model_ckpt  : /home/amzad/Desktop/diffusion/artifacts/model_ckpt/
   logs : /home/amzad/Desktop/diffusion/logs/
   figs : /home/amzad/Desktop/diffusion/fig/
+  dataset_dir : /home/amzad/Desktop/diffusion/dataset/images/
 
 noise_schedule: 
   start : 1e-4 
@@ -19,7 +20,6 @@ noise_schedule:
 
 
 Dir : 
-  dataset_dir : /home/amzad/Desktop/diffusion/dataset/images/
   artifact_dir : /home/amzad/Desktop/diffusion/artifacts
 
 
