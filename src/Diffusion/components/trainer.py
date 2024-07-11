@@ -78,7 +78,7 @@ class Trainer:
             logger.info(f"train_config {train_config}")
 
             for epoch in range(epochs):
-                logger.info(f"Starting epoch {epoch}:")
+                # logger.info(f"Starting epoch {epoch}:")
                 pbar = tqdm(self.dataloader)
                 for i, (images, _) in enumerate(pbar):
                     images = images.to(self.device)
@@ -86,7 +86,7 @@ class Trainer:
                     x_t, noise = self.diffusion.noise_images(images, t)
                     predicted_noise = self.model(x_t, t)
                     loss = self.mse(noise, predicted_noise)
-                    logger.info(f"Epoch {epoch}, Batch {i}: MSE Loss = {loss.item()}")
+                    # logger.info(f"Epoch {epoch}, Batch {i}: MSE Loss = {loss.item()}")
                     self.optimizer.zero_grad()
                     loss.backward()
                     self.optimizer.step()
@@ -94,20 +94,21 @@ class Trainer:
                         self.Ema.step_ema(self.Ema_model, self.model)
 
                     pbar.set_postfix(MSE=loss.item())
+                    
+                if epoch % train_config["intrable"] == 0:
+                    sampled_images = self.diffusion.sample(
+                        self.model, n=train_config["num_sample"]
+                    )
+                    save_images(
+                        sampled_images,
+                        os.path.join(train_config["figs"], f"prediction_on_{epoch}.jpg"),
+                    )
             torch.save(
                 self.model.state_dict(),
                 os.path.join(
                     train_config["model_ckpt"], f"{train_config['train_name']}_ckpt_.pt"
                 ),
             )
-            if epoch % train_config["intrable"] == 0:
-                sampled_images = self.diffusion.sample(
-                    self.model, n=train_config["num_sample"]
-                )
-                save_images(
-                    sampled_images,
-                    os.path.join(train_config["figs"], f"prediction_on_{epoch}.jpg"),
-                )
         except Exception as e:
             logger.info(f"Error  occared {e}")
             raise CustomException(e, sys)
@@ -120,7 +121,7 @@ if __name__ == "__main__":
     from Diffusion.components.noise_sheduler import Diffusion
 
     data = get_data(train_config["dataset"])
-    model = UNet.to('cuda')
+    model = UNet()
     diffusion = Diffusion()
     trainer = Trainer(model, data, diffusion)
     trainer.train()

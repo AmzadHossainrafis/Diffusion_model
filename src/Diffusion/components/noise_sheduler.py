@@ -79,7 +79,7 @@ class Diffusion:
         Returns:
             tuple: A tuple containing the noised images and the noise itself.
         """
-        logger.info("sapling new noisy images ")
+        #logger.info("sapling new noisy images ")
         sqrt_alpha_hat = torch.sqrt(self.alpha_hat[t])[:, None, None, None]
         sqrt_one_minus_alpha_hat = torch.sqrt(1 - self.alpha_hat[t])[
             :, None, None, None
@@ -97,7 +97,7 @@ class Diffusion:
         Returns:
             torch.Tensor: A tensor of randomly sampled timesteps.
         """
-        logger.info('creating new timestep ')
+        #logger.info('creating new timestep ')
         return torch.randint(low=1, high=self.noise_steps, size=(n,))
 
     def sample(self, model, n):
