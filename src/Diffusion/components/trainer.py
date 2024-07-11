@@ -10,7 +10,7 @@ import sys
 from Diffusion.components.noise_sheduler import Diffusion
 from Diffusion.components.custom import EMA
 import copy
-from Diffusion.components.custom import EMA
+
 
 
 train_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
@@ -58,7 +58,6 @@ class Trainer:
         self.optimizer = optim.AdamW(self.model.parameters(), lr=train_config["lr"])
         self.mse = nn.MSELoss()
         self.diffusion = diffusion
-        # self.logger = SummaryWriter(os.path.join("runs", "diffusion_unconditional"))
         self.l = len(dataloader)
         self.ema = ema
         if self.ema: 
