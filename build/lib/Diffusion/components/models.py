@@ -73,3 +73,10 @@ class UNet(nn.Module):
         x = self.sa6(x)
         output = self.outc(x)
         return output
+
+if __name__ == "__main__":
+    model = UNet().to("cuda")
+    print(model)
+    x = torch.randn(2, 3, 256, 256)
+    t = torch.randint(0, 100, (2,))
+    print(model(x, t).shape)
