@@ -1,20 +1,21 @@
 Train_config:
   train_name: 'diffusion unconditional'
   batch_size: 4 
-  epoch : 500 
-  lr : 3e-4 
+  epochs : 500 
+  lr : 0.0003
+  device : cuda
   shaffle : True 
-  intrable : 10 
+  intrable : 1
   num_sample : 3 # number of samples to generate mainly represented as n 
   model_ckpt  : /home/amzad/Desktop/diffusion/artifacts/model_ckpt/
   logs : /home/amzad/Desktop/diffusion/logs/
   figs : /home/amzad/Desktop/diffusion/fig/
-  dataset_dir : /home/amzad/Desktop/diffusion/dataset/images/
+  dataset : /home/amzad/Desktop/diffusion/dataset/images/
   ema_enable : True 
   ema : 0.999
 
-noise_schedule: 
-  start : 1e-4 
+Noise_schedule: 
+  start : 0.0001
   end : 0.02
   steps : 1000
   device : cuda
