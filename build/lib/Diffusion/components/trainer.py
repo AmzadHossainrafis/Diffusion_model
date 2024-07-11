@@ -10,7 +10,7 @@ import sys
 from Diffusion.components.noise_sheduler import Diffusion
 from Diffusion.components.custom import EMA
 import copy
-from Diffusion.components.custom import EMA
+
 
 
 train_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
@@ -58,7 +58,6 @@ class Trainer:
         self.optimizer = optim.AdamW(self.model.parameters(), lr=train_config["lr"])
         self.mse = nn.MSELoss()
         self.diffusion = diffusion
-        # self.logger = SummaryWriter(os.path.join("runs", "diffusion_unconditional"))
         self.l = len(dataloader)
         self.ema = ema
         if self.ema: 
@@ -79,7 +78,7 @@ class Trainer:
             logger.info(f"train_config {train_config}")
 
             for epoch in range(epochs):
-                logger.info(f"Starting epoch {epoch}:")
+                # logger.info(f"Starting epoch {epoch}:")
                 pbar = tqdm(self.dataloader)
                 for i, (images, _) in enumerate(pbar):
                     images = images.to(self.device)
@@ -116,12 +115,12 @@ class Trainer:
 
 if __name__ == "__main__":
 
-    from Diffusion.components.models import UNet
+    from Diffusion.components.models import *
     from Diffusion.components.data_loader import get_data
     from Diffusion.components.noise_sheduler import Diffusion
 
     data = get_data(train_config["dataset"])
-    model = UNet.to('cuda')
+    model = UNet()
     diffusion = Diffusion()
     trainer = Trainer(model, data, diffusion)
     trainer.train()
