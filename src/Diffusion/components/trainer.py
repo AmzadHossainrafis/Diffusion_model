@@ -126,14 +126,14 @@ class Trainer:
             raise CustomException(e, sys)
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    from Diffusion.components.models import UNet
-    from Diffusion.components.data_loader import get_data
-    from Diffusion.components.noise_sheduler import Diffusion
+#     from Diffusion.components.models import UNet
+#     from Diffusion.components.data_loader import get_data
+#     from Diffusion.components.noise_sheduler import Diffusion
 
-    data = get_data(train_config["dataset"])
-    model = UNet()
-    diffusion = Diffusion()
-    trainer = Trainer(model, data, diffusion)
-    trainer.train()
+#     data = get_data(train_config["dataset"])
+#     model = UNet()
+#     diffusion = Diffusion()
+#     trainer = Trainer(model, data, diffusion)
+#     trainer.train()
