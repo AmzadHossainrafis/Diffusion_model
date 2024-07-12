@@ -11,6 +11,7 @@ src/Diffusion/components/custom.py
 src/Diffusion/components/data_loader.py
 src/Diffusion/components/data_transformation.py
 src/Diffusion/components/models.py
+src/Diffusion/components/noise_sheduler.py
 src/Diffusion/components/trainer.py
 src/Diffusion/pipeline/__init__.py
 src/Diffusion/pipeline/train_pipeline.py
