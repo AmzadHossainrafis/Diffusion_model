@@ -74,6 +74,7 @@ class UNet(nn.Module):
         output = self.outc(x)
         return output
 
+
 if __name__ == "__main__":
     model = UNet().to("cuda")
     print(model)

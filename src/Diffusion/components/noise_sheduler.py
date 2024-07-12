@@ -1,9 +1,25 @@
-import torch
+import sys
 from tqdm import tqdm
+import torch
 from Diffusion.utils.logger import logger
 from Diffusion.utils.exception import CustomException
-import sys
 from Diffusion.utils.utils import read_config
+
+"""
+bug : line 122 : throughing error .
+
+ Error: The size of tensor a (48) must match the size of tensor b (3)
+   at non-singleton dimension 0 in
+ /home/amzad/miniconda3/envs/torch_env/lib/python3.9/site-packages/Diffusion/components/noise_sheduler.py at 
+ line 122 in /home/amzad/Desktop/diffusion/src/Diffusion/components/trainer.py 
+ at line 99
+
+solution :
+not sure about the solution but the error is occuring because of the mismatch of the tensor size.
+
+
+"""
+
 
 noise_schedule_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
     "Noise_schedule"
@@ -25,10 +41,12 @@ class Diffusion:
         alpha_hat (torch.Tensor): The cumulative product of alpha, used in the denoising process.
 
     Methods:
-        prepare_noise_schedule(): Prepares the noise schedule as a linear interpolation between beta_start and beta_end.
-        noise_images(x, t): Applies noise to images x at time steps t, based on the noise schedule.
+        prepare_noise_schedule(): Prepares the noise schedule as a linear interpolation between 
+        beta_start and beta_end.noise_images(x, t): Applies noise to images x at time steps t, 
+        based on the noise schedule.
         sample_timesteps(n): Randomly samples n timesteps within the noise schedule.
-        sample(model, n): Generates n new images using the provided model by reversing the diffusion process.
+        sample(model, n): Generates n new images using the provided model by reversing the diffusion 
+        process.
     """
 
     def __init__(
@@ -37,7 +55,7 @@ class Diffusion:
         beta_start=noise_schedule_config["start"],
         beta_end=noise_schedule_config["end"],
         img_size=256,
-        device= noise_schedule_config["device"]
+        device=noise_schedule_config["device"],
     ):
         """
         Initializes the Diffusion model with the specified parameters and computes the noise schedule.
@@ -79,7 +97,7 @@ class Diffusion:
         Returns:
             tuple: A tuple containing the noised images and the noise itself.
         """
-        #logger.info("sapling new noisy images ")
+        # logger.info("sapling new noisy images ")
         sqrt_alpha_hat = torch.sqrt(self.alpha_hat[t])[:, None, None, None]
         sqrt_one_minus_alpha_hat = torch.sqrt(1 - self.alpha_hat[t])[
             :, None, None, None
@@ -97,7 +115,7 @@ class Diffusion:
         Returns:
             torch.Tensor: A tensor of randomly sampled timesteps.
         """
-        #logger.info('creating new timestep ')
+        # logger.info('creating new timestep ')
         return torch.randint(low=1, high=self.noise_steps, size=(n,))
 
     def sample(self, model, n):
@@ -114,8 +132,8 @@ class Diffusion:
         logger.info(f"Sampling {n} new images....")
         model.eval()
         with torch.no_grad():
-            try:  
-                logger.info(f'sampaling image : {n}')
+            try:
+                logger.info(f"sampaling image : {n}")
                 x = torch.randn((n, 3, self.img_size, self.img_size)).to(self.device)
                 for i in tqdm(reversed(range(1, self.noise_steps)), position=0):
                     t = (torch.ones(n) * i).long().to(self.device)
@@ -132,7 +150,8 @@ class Diffusion:
                         / torch.sqrt(alpha)
                         * (
                             x
-                            - ((1 - alpha) / (torch.sqrt(1 - alpha_hat))) * predicted_noise
+                            - ((1 - alpha) / (torch.sqrt(1 - alpha_hat)))
+                            * predicted_noise
                         )
                         + torch.sqrt(beta) * noise
                     )
