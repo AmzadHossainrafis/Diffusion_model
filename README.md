@@ -34,7 +34,9 @@ Despite their computational demands, diffusion models' ability to generate diver
 
 ```
 
+
 3. install requirements 
+please install pytorch from 
 ```bash
 #activate the conda env 
 $ conda activate [env_name]
@@ -53,6 +55,8 @@ just changer the dataset dir path in the config.yaml file
 
 
 ## Results 
+Anime face generation 
+
 Flower data generation 
 
 Pokemon data generation 
