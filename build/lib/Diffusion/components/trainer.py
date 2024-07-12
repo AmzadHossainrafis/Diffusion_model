@@ -1,16 +1,15 @@
+import os
+import sys
+import copy
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
-import os
-from Diffusion.utils.utils import save_images, read_config
+from Diffusion.utils.utils import read_config
 from Diffusion.utils.logger import logger
 from Diffusion.utils.exception import CustomException
-import sys
 from Diffusion.components.noise_sheduler import Diffusion
 from Diffusion.components.custom import EMA
-import copy
-
 
 
 train_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
@@ -39,7 +38,9 @@ class Trainer:
         implementation.
     """
 
-    def __init__(self, model, dataloader, diffusion,ema = train_config['ema_enable'] ,device=None):
+    def __init__(
+        self, model, dataloader, diffusion, ema=train_config["ema_enable"], device=None
+    ):
         """
         Initializes the Trainer class with model, dataloader, diffusion process, and device.
 
@@ -60,10 +61,9 @@ class Trainer:
         self.diffusion = diffusion
         self.l = len(dataloader)
         self.ema = ema
-        if self.ema: 
+        if self.ema:
             self.Ema = EMA(0.99)
             self.Ema_model = copy.deepcopy(self.model).eval().requires_grad_(False)
-            
 
     def train(self, epochs=train_config["epochs"]):
         """
@@ -86,7 +86,7 @@ class Trainer:
                     x_t, noise = self.diffusion.noise_images(images, t)
                     predicted_noise = self.model(x_t, t)
                     loss = self.mse(noise, predicted_noise)
-                    logger.info(f"Epoch {epoch}, Batch {i}: MSE Loss = {loss.item()}")
+                    # logger.info(f"Epoch {epoch}, Batch {i}: MSE Loss = {loss.item()}")
                     self.optimizer.zero_grad()
                     loss.backward()
                     self.optimizer.step()
@@ -94,38 +94,46 @@ class Trainer:
                         self.Ema.step_ema(self.Ema_model, self.model)
 
                     pbar.set_postfix(MSE=loss.item())
-            torch.save(
-                self.model.state_dict(),
-                os.path.join(
-                    train_config["model_ckpt"], f"{train_config['train_name']}_ckpt_.pt"
-                ),
-            )
-            if epoch % train_config["intrable"] == 0:
-                sampled_images = self.diffusion.sample(
-                    self.model, n=train_config["num_sample"]
-                )
-                save_images(
-                    sampled_images,
-                    os.path.join(train_config["figs"], f"prediction_on_{epoch}.jpg"),
-                )
+
+                # if epoch % train_config["intrable"] == 0:
+                #     sampled_images = self.diffusion.sample(
+                #         self.model, n=train_config["num_sample"]
+                #     )
+                #     save_images(
+                #         sampled_images,
+                #         os.path.join(
+                #             train_config["figs"], f"prediction_on_{epoch}.jpg"
+                #         ),
+                #     )
+                if self.ema:
+                    torch.save(
+                        self.Ema_model.state_dict(),
+                        os.path.join(
+                            train_config["model_ckpt"],
+                            f"{train_config['train_name']}_ema_ckpt_.pt",
+                        ),
+                    )
+                else:
+                    torch.save(
+                        self.model.state_dict(),
+                        os.path.join(
+                            train_config["model_ckpt"],
+                            f"{train_config['train_name']}_ckpt_.pt",
+                        ),
+                    )
         except Exception as e:
             logger.info(f"Error  occared {e}")
             raise CustomException(e, sys)
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    from Diffusion.components.models import *
-    from Diffusion.components.data_loader import get_data
-    from Diffusion.components.noise_sheduler import Diffusion
+#     from Diffusion.components.models import UNet
+#     from Diffusion.components.data_loader import get_data
+#     from Diffusion.components.noise_sheduler import Diffusion
 
-    data = get_data(train_config["dataset"])
-    model = UNet()
-    diffusion = Diffusion()
-    trainer = Trainer(model, data, diffusion)
-    trainer.train()
-
-
-
-
-
+#     data = get_data(train_config["dataset"])
+#     model = UNet()
+#     diffusion = Diffusion()
+#     trainer = Trainer(model, data, diffusion)
+#     trainer.train()

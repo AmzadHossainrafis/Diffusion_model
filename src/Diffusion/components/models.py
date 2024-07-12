@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from custom import SelfAttention, DoubleConv, Down, Up
+from Diffusion.components.custom import SelfAttention, DoubleConv, Down, Up
 from Diffusion.utils.utils import read_config
 
 model_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
@@ -75,9 +75,3 @@ class UNet(nn.Module):
         return output
 
 
-if __name__ == "__main__":
-    model = UNet().to("cuda")
-    print(model)
-    x = torch.randn(2, 3, 256, 256)
-    t = torch.randint(0, 100, (2,))
-    print(model(x, t).shape)

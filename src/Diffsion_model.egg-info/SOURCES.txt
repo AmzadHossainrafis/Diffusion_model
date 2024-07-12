@@ -14,6 +14,7 @@ src/Diffusion/components/models.py
 src/Diffusion/components/noise_sheduler.py
 src/Diffusion/components/trainer.py
 src/Diffusion/pipeline/__init__.py
+src/Diffusion/pipeline/prediction_pipline.py
 src/Diffusion/pipeline/train_pipeline.py
 src/Diffusion/utils/__init__.py
 src/Diffusion/utils/exception.py
