@@ -29,12 +29,7 @@ app = Flask(__name__)
 def hello_world(): 
     return render_template('index.html')
 
-@app.route('/button-clicked', methods=['POST'])
-def button_clicked():
-    # Your function code here
-    return 'Button clicked!'
 
-@
 @app.route('/predict', methods=['POST'])
 def predict():
     result = pipeline.result(model, 5)
