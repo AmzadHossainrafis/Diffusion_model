@@ -57,8 +57,8 @@ just changer the dataset dir path in the config.yaml file
 ## Results 
 Anime face generation 
 
-![alt text](fig/result_1.jpeg)
-![alt text](fig/result.jpeg)
+![alt text](static/result_2.jpeg)
+![alt text](static/result_1.jpeg)
 Flower data generation 
 
 Pokemon data generation 
