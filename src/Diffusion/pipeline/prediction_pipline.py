@@ -22,6 +22,10 @@ class PredictionPipeline:
         return torch.linspace(self.beta_start, self.beta_end, self.noise_steps)
 
     def result(self, model, n):
+        #clear cache 
+        # torch.cuda.empty_cache() 
+        # #clear memory 
+        # torch.cuda.memory_summary(device=None, abbreviated=False)
         logger.info(f"Sampling {n} new images....")
         model.eval()
         try : 
@@ -55,10 +59,10 @@ if __name__ == "__main__":
     #model = model.to("cuda")
 
     pipeline = PredictionPipeline(img_size=64)
-    result = pipeline.result(model, 3)
+    result = pipeline.result(model, 5)
 
     from Diffusion.utils.utils import save_images ,plot_images
-    fig_path = '/home/amzad/Desktop/diffusion/fig/result.jpg'
+    fig_path = '/home/amzad/Desktop/diffusion/fig/result_3.jpg'
     save_images(result,fig_path )
 
 
