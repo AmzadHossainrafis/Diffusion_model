@@ -55,15 +55,21 @@ just changer the dataset dir path in the config.yaml file
 
 
 ## Results 
-Anime face generation 
+
 
 ![alt text](static/result_2.jpeg)
 ![alt text](static/result_1.jpeg)
-Flower data generation 
+![alt text](static/result_8.jpg)
+![alt text](static/result_6.jpg)
+![alt text](static/result_10.jpg)
+## pre train wights (unconditional)
+![anime face generation ]()
+![human face generation ]()
+![folowe generation ]()
+![butterfly image generation ]()
+![art generation ]()
 
-Pokemon data generation 
 
-MNIST data generation 
 
 ## Usage
 
