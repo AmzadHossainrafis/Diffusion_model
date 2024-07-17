@@ -52,17 +52,20 @@ class PredictionPipeline:
 
 
 if __name__ == "__main__":
+    #clear cache memory 
+    torch.cuda.empty_cache()
+
     from Diffusion.components.models import *
     model = UNet().to("cuda")
-    model_ckpt = "/home/amzad/Desktop/diffusion/artifacts/model_ckpt/anime_face_ckpt.pt"
+    model_ckpt = "/home/amzad/Desktop/diffusion/artifacts/model_ckpt/flower.pt"
     model.load_state_dict(torch.load(model_ckpt))
     #model = model.to("cuda")
 
     pipeline = PredictionPipeline(img_size=64)
-    result = pipeline.result(model, 5)
+    result = pipeline.result(model, 7)
 
     from Diffusion.utils.utils import save_images ,plot_images
-    fig_path = '/home/amzad/Desktop/diffusion/fig/result_3.jpg'
+    fig_path = '/home/amzad/Desktop/diffusion/fig/result_13.jpg'
     save_images(result,fig_path )
 
 
