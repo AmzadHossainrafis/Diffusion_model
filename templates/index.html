@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href=url_for('static', filename='style.css')>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
@@ -8,7 +15,10 @@
 <body bgcolor="#FDE5F6">
     
     
-<dev> 
+<dev class=""> 
+    <div class="container-fluid">
+
+    <h1>Diffusion for image generation </h1>
     <img src="static/result_1.jpeg">
     <img src="static/result.jpeg">
     <img src="static/result_2.jpeg">
@@ -16,6 +26,7 @@
     <img src="static/result_10.jpg">
     <img src="static/result_8.jpg">
 
+    </div>
     <dev id="intro">
         <h1>Diffusion for image generation </h1>
 <p>
@@ -27,7 +38,33 @@
 </p>
     </dev>
 
+<div class="container">
+    <h1>Generate images</h1>
+    #droopdown asking the user to select what type of image they want to generate options are humanface , anime face , flowers 
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Select image type
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Human face</a>
+          <a class="dropdown-item" href="#">Anime face</a>
+          <a class="dropdown-item" href="#">Flowers</a>
+        </div>
 
+
+
+    </div>
+   
+
+    <form action="/generate" method="post">
+        <label for="number">Number of images to generate:</label>
+        <input type="number" id="number" name="number" min="1" max="10" required>
+        <button type="submit">Generate</button>
+    </form> 
+
+
+
+</div>
 
 </dev>
     <!-- Your content goes here -->
