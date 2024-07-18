@@ -4,9 +4,17 @@ from Diffusion.components.data_transformation import transforms
 from Diffusion.utils.logger import logger
 from Diffusion.utils.utils import read_config
 
-data_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")["Train_config"]
+data_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
+    "Train_config"
+]
 
-def get_data(dataset_dir, batch_size=data_config['batch_size'], shuffle=True, transforms=transforms):
+
+def get_data(
+    dataset_dir,
+    batch_size=data_config["batch_size"],
+    shuffle=True,
+    transforms=transforms,
+):
     """
     Returns a DataLoader object for the dataset at the specified directory.
 
