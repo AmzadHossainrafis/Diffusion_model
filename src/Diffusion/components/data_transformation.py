@@ -2,7 +2,6 @@ import torchvision
 from Diffusion.utils.utils import read_config
 
 
-
 transform_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
     "Transform_config"
 ]

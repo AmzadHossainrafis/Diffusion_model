@@ -124,5 +124,3 @@ class Trainer:
         except Exception as e:
             logger.info(f"Error  occared {e}")
             raise CustomException(e, sys)
-
-
