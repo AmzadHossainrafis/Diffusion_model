@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 from tqdm import tqdm
 import torch
 from Diffusion.utils.logger import logger
@@ -18,10 +19,13 @@ solution :
 not sure about the solution but the error is occuring because of the mismatch of the tensor size.
 
 
+solution : 
+Diffusion(64)
+
 """
 
 
-noise_schedule_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
+noise_schedule_config = read_config(f"{Path.cwd().parents[2]}/config/config.yaml")[
     "Noise_schedule"
 ]
 

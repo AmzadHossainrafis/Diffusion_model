@@ -1,9 +1,9 @@
+from pathlib import Path 
 import torch
 import torch.nn as nn
 from Diffusion.components.custom import SelfAttention, DoubleConv, Down, Up
 from Diffusion.utils.utils import read_config
-
-model_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
+model_config = read_config(f"{Path.cwd().parents[2]}/config/config.yaml")[
     "model_config"
 ]
 

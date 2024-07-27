@@ -1,10 +1,12 @@
+import os
+from pathlib import Path 
 import torchvision
 from torch.utils.data import DataLoader
 from Diffusion.components.data_transformation import transforms
 from Diffusion.utils.logger import logger
 from Diffusion.utils.utils import read_config
 
-data_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
+data_config = read_config(f"{Path.cwd().parents[2]}/config/config.yaml")[
     "Train_config"
 ]
 
