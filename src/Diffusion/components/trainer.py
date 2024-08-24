@@ -5,6 +5,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
+from pathlib import Path
 from Diffusion.utils.utils import read_config
 from Diffusion.utils.logger import logger
 from Diffusion.utils.exception import CustomException
@@ -12,7 +13,7 @@ from Diffusion.components.noise_sheduler import Diffusion
 from Diffusion.components.custom import EMA
 
 
-train_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
+train_config =read_config(f"{Path.cwd().parents[2]}/config/config.yaml")[
     "Train_config"
 ]
 
@@ -124,5 +125,3 @@ class Trainer:
         except Exception as e:
             logger.info(f"Error  occared {e}")
             raise CustomException(e, sys)
-
-

@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 from tqdm import tqdm
 import torch
 from Diffusion.utils.logger import logger
@@ -18,10 +19,13 @@ solution :
 not sure about the solution but the error is occuring because of the mismatch of the tensor size.
 
 
+solution : 
+Diffusion(64)
+
 """
 
 
-noise_schedule_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
+noise_schedule_config = read_config(f"{Path.cwd().parents[2]}/config/config.yaml")[
     "Noise_schedule"
 ]
 
@@ -41,11 +45,11 @@ class Diffusion:
         alpha_hat (torch.Tensor): The cumulative product of alpha, used in the denoising process.
 
     Methods:
-        prepare_noise_schedule(): Prepares the noise schedule as a linear interpolation between 
-        beta_start and beta_end.noise_images(x, t): Applies noise to images x at time steps t, 
+        prepare_noise_schedule(): Prepares the noise schedule as a linear interpolation between
+        beta_start and beta_end.noise_images(x, t): Applies noise to images x at time steps t,
         based on the noise schedule.
         sample_timesteps(n): Randomly samples n timesteps within the noise schedule.
-        sample(model, n): Generates n new images using the provided model by reversing the diffusion 
+        sample(model, n): Generates n new images using the provided model by reversing the diffusion
         process.
     """
 

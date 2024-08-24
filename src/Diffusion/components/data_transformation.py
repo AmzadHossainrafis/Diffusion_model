@@ -1,9 +1,9 @@
 import torchvision
+from pathlib import Path
 from Diffusion.utils.utils import read_config
 
 
-
-transform_config = read_config("/home/amzad/Desktop/diffusion/config/config.yaml")[
+transform_config = read_config(f"{Path.cwd().parents[2]}/config/config.yaml")[
     "Transform_config"
 ]
 

@@ -1,6 +1,11 @@
 pillow 
 flask 
-gunicorn
+gvicorn
+jinja2 
+PyYAML
+python-multipart 
 matplotlib 
+evidently == 0.2.8
 PyYAML
 tqdm
+-e .
