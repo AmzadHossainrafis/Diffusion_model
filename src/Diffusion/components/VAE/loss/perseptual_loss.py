@@ -174,9 +174,6 @@ class LPIPS(nn.Module):
 class ScalingLayer(nn.Module):
     def __init__(self):
         super(ScalingLayer, self).__init__()
-        # Imagnet normalization for (0-1)
-        # mean = [0.485, 0.456, 0.406]
-        # std = [0.229, 0.224, 0.225]
         self.register_buffer(
             "shift", torch.Tensor([-0.030, -0.088, -0.188])[None, :, None, None]
         )
@@ -211,22 +208,24 @@ class NetLinLayer(nn.Module):
         return out
 
 
-# if __name__ == "__main__":
-#     # Test code
-#     # Create a random tensor
-#     x = torch.rand(1, 3, 256, 256)
-#     y = torch.rand(1, 3, 256, 256)
+if __name__ == "__main__":
+    # Test code
+    # Create a random tensor
+    torch.manual_seed(0)
+    x = torch.rand(1, 3, 256, 256)
+    y = torch.rand(1, 3, 256, 256)
+    #set seed 
 
-#     # Create the perceptual loss object
-#     perceptual_loss = PerceptualLoss()
+    # Create the perceptual loss object
+    perceptual_loss = PerceptualLoss()
 
-#     # Compute the loss
-#     loss = perceptual_loss(x, y)
+    # Compute the loss
+    loss = perceptual_loss(x, y)
 
-#     # Create the LPIPS object
-#     print(f"Perceptual Loss: {loss}")
-#     # Create the LPIPS object with version 0.1
-#     lpips = LPIPS(version="0.1")
-#     # Compute the loss
-#     loss = lpips(x, y)
-#     print(f"LPIPS Loss: {loss}")
+    # Create the LPIPS object
+    print(f"Perceptual Loss: {loss}")
+    # Create the LPIPS object with version 0.1
+    lpips = LPIPS(version="0.1")
+    # Compute the loss
+    loss = lpips(x, y)
+    print(f"LPIPS Loss: {loss}")
