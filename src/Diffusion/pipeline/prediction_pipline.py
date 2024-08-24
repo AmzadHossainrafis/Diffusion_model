@@ -71,7 +71,7 @@ if __name__ == "__main__":
     from Diffusion.components.models import *
 
     model = UNet().to("cuda")
-    model_ckpt = "/home/amzad/Desktop/diffusion/artifacts/model_ckpt/flower.pt"
+    model_ckpt = "/home/amzad/Desktop/diffusion/artifacts/model_ckpt/butterfly.pt"
     model.load_state_dict(torch.load(model_ckpt))
     # model = model.to("cuda")
 
@@ -80,5 +80,5 @@ if __name__ == "__main__":
 
     from Diffusion.utils.utils import save_images, plot_images
 
-    fig_path = "/home/amzad/Desktop/diffusion/fig/result_14.jpg"
+    fig_path = "/home/amzad/Desktop/diffusion/fig/result_17.jpg"
     save_images(result, fig_path)

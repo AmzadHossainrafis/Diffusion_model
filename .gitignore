@@ -134,4 +134,4 @@ dmypy.json
 project/
 wandb/
 artifacts/
-src/Diffusion/pipeline/
+src/Diffusion/pipeline
