@@ -72,9 +72,3 @@ class Discriminator(nn.Module):
         for layer in self.layers:
             x = layer(x)
         return x
-
-
-# if __name__ == "__main__":
-#     x = torch.randn((2, 3, 256, 256))
-#     prob = Discriminator(im_channels=3)(x)
-#     print(prob.shape)
