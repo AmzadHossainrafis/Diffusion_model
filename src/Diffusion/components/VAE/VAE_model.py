@@ -269,6 +269,17 @@ class VQVAE(nn.Module):
                                         self.num_layers,
                                         self.norm_channels))
                 
+
+        def quataize(self, x ):
+            pass 
+        
+
+
+        def forward(self, x): 
+            pass 
+        
+            
+                
                 
             
 
