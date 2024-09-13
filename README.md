@@ -63,12 +63,7 @@ just changer the dataset dir path in the config.yaml file
 ![alt text](static/result_6.jpg)
 ![alt text](static/result_10.jpg)
 ## pre train wights (unconditional)
-![anime face generation ](https://drive.google.com/drive/folders/11Ej5R4HSvo1naScvmAoTaf80FgpEl36d?usp=sharing)
-![human face generation ](https://drive.google.com/drive/folders/11Ej5R4HSvo1naScvmAoTaf80FgpEl36d?usp=sharing)
-![folowe generation ](https://drive.google.com/drive/folders/11Ej5R4HSvo1naScvmAoTaf80FgpEl36d?usp=sharing)
-![butterfly image generation ](https://drive.google.com/drive/folders/11Ej5R4HSvo1naScvmAoTaf80FgpEl36d?usp=sharing)
-![art generation ](https://drive.google.com/drive/folders/11Ej5R4HSvo1naScvmAoTaf80FgpEl36d?usp=sharing)
-
+https://drive.google.com/drive/folders/11Ej5R4HSvo1naScvmAoTaf80FgpEl36d?usp=sharing
 
 
 ## Usage
