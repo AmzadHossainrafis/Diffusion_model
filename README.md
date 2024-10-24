@@ -53,6 +53,12 @@ $ pip install -r requirments.txt
 just changer the dataset dir path in the config.yaml file 
 
 
+```bash
+ $ python train_pipeline.py
+
+```
+
+
 
 ## Results 
 
@@ -62,9 +68,15 @@ just changer the dataset dir path in the config.yaml file
 ![alt text](static/result_8.jpg)
 ![alt text](static/result_6.jpg)
 ![alt text](static/result_10.jpg)
+
+
 ## pre train wights (unconditional)
 https://drive.google.com/drive/folders/11Ej5R4HSvo1naScvmAoTaf80FgpEl36d?usp=sharing
+download pre-train model weight from this like and replace  model_ckpt = "{weight_dir}"
+```bash
+ $ python predicton_pipe;ine.py
 
+```
 
 ## Usage
 
