@@ -74,7 +74,7 @@ just changer the dataset dir path in the config.yaml file
 https://drive.google.com/drive/folders/11Ej5R4HSvo1naScvmAoTaf80FgpEl36d?usp=sharing
 download pre-train model weight from this like and replace  model_ckpt = "{weight_dir}"
 ```bash
- $ python predicton_pipe;ine.py
+ $ python predicton_pipeline.py
 
 ```
 
